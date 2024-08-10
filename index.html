@@ -1,3 +1,73 @@
-<form action="index.php" method="post">
-    <!-- フォーム内容はそのまま -->
-</form>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地図付きアンケートフォーム</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>地図付きアンケートフォーム</h1>
+    <form action="index.php" method="post">
+        <!-- 他のアンケート項目 -->
+        <label for="name">お名前:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="age">年齢:</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="gender">性別:</label><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">男性</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">女性</label><br>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">その他</label><br><br>
+
+        <!-- 地図表示エリア -->
+        <div id="map"></div><br>
+
+        <!-- 隠しフィールドで座標を送信 -->
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+
+        <label for="question1">アンケート質問1:</label><br>
+        <textarea id="question1" name="question1" rows="4" cols="50"></textarea><br><br>
+
+        <!-- 提出ボタン -->
+        <input type="submit" value="送信">
+    </form>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // 地図の初期化
+        var map = L.map('map').setView([35.681236, 139.767125], 13); // 東京駅の座標
+
+        // OpenStreetMapのタイルを設定
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // 地図をクリックしたときのイベントリスナー
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            // フォームの隠しフィールドに座標を設定
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+
+            // クリックした場所にマーカーを追加
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup("選択した場所: " + lat.toFixed(5) + ", " + lng.toFixed(5))
+                .openPopup();
+        });
+    </script>
+</body>
+</html>
