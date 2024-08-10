@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アンケートフォーム</title>
+</head>
+<body>
+    <h1>アンケートフォーム</h1>
+    <form action="/submit_form" method="post">
+        <!-- 名前の入力 -->
+        <label for="name">お名前:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <!-- 年齢の入力 -->
+        <label for="age">年齢:</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <!-- 性別の選択 -->
+        <label for="gender">性別:</label><br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">男性</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">女性</label><br>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">その他</label><br><br>
+
+        <!-- 質問 -->
+        <label for="question1">アンケート質問1:</label><br>
+        <textarea id="question1" name="question1" rows="4" cols="50"></textarea><br><br>
+
+        <!-- 好きな色の選択 -->
+        <label for="color">好きな色:</label><br>
+        <select id="color" name="color">
+            <option value="red">赤</option>
+            <option value="blue">青</option>
+            <option value="green">緑</option>
+            <option value="yellow">黄</option>
+            <option value="other">その他</option>
+        </select><br><br>
+
+        <!-- 提出ボタン -->
+        <input type="submit" value="送信">
+    </form>
+</body>
+</html>
